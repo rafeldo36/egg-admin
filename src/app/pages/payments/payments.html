@@ -1,0 +1,15 @@
+<div class="card p-4 shadow">
+  <h5>Add Payment</h5>
+
+  <form (ngSubmit)="addPayment()">
+    <select class="form-control mb-2" [(ngModel)]="payment.customerId" name="customerId">
+      <option *ngFor="let c of customers" [value]="c._id">
+        {{c.name}}
+      </option>
+    </select>
+
+    <input type="number" class="form-control mb-2" placeholder="Amount" [(ngModel)]="payment.amount" name="amount">
+
+    <button class="btn btn-warning">Add Payment</button>
+  </form>
+</div>

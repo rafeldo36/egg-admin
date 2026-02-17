@@ -1,0 +1,36 @@
+<div class="card p-3 shadow mb-4">
+  <h5>Add Customer</h5>
+  <form (ngSubmit)="addCustomer()">
+    <input class="form-control mb-2" placeholder="Name" [(ngModel)]="newCustomer.name" name="name" required>
+    <input class="form-control mb-2" placeholder="Phone" [(ngModel)]="newCustomer.phone" name="phone">
+    <select class="form-control mb-2" [(ngModel)]="newCustomer.type" name="type">
+      <option value="retailer">Retailer</option>
+      <option value="hotel">Hotel</option>
+    </select>
+    <input type="number" class="form-control mb-2" placeholder="Credit Limit" [(ngModel)]="newCustomer.creditLimit" name="creditLimit">
+    <button class="btn btn-primary">Add</button>
+  </form>
+</div>
+
+<div class="card shadow">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Credit Limit</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of customers">
+        <td>{{c.name}}</td>
+        <td>{{c.type}}</td>
+        <td>{{c.creditLimit}}</td>
+        <td [class.text-danger]="c.currentBalance > 0">
+          ₹ {{c.currentBalance}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

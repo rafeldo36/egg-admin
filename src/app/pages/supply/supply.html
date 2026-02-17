@@ -1,0 +1,17 @@
+<div class="card p-4 shadow">
+  <h5>Add Supply</h5>
+
+  <form (ngSubmit)="addSupply()">
+    <select class="form-control mb-2" [(ngModel)]="supply.customerId" name="customerId">
+      <option *ngFor="let c of customers" [value]="c._id">
+        {{c.name}}
+      </option>
+    </select>
+
+    <input type="number" class="form-control mb-2" placeholder="Trays" [(ngModel)]="supply.trays" name="trays">
+    <input type="number" class="form-control mb-2" placeholder="Rate Per Tray" [(ngModel)]="supply.ratePerTray" name="ratePerTray">
+    <input type="number" class="form-control mb-2" placeholder="Purchase Rate" [(ngModel)]="supply.purchaseRatePerTray" name="purchaseRatePerTray">
+
+    <button class="btn btn-success">Add Supply</button>
+  </form>
+</div>

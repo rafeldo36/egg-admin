@@ -1,0 +1,28 @@
+.navbar {
+  background: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.toggle-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  margin-right: 15px;
+}
+
+.logout-btn {
+  background: #ef4444;
+  border: none;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}

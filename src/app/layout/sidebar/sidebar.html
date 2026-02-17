@@ -1,0 +1,35 @@
+<div class="sidebar"
+     [class.closed]="!open">
+
+  <div class="logo">
+    <span *ngIf="open">🥚 Egg ERP</span>
+    <span *ngIf="!open">🥚</span>
+  </div>
+
+  <ul>
+    <li routerLink="/dashboard" (click)="close.emit()">
+      <i class="bi bi-speedometer2"></i>
+      <span *ngIf="open">Dashboard</span>
+    </li>
+
+    <li routerLink="/customers" (click)="close.emit()">
+      <i class="bi bi-people"></i>
+      <span *ngIf="open">Customers</span>
+    </li>
+
+    <li routerLink="/supply" (click)="close.emit()">
+      <i class="bi bi-box"></i>
+      <span *ngIf="open">Supply</span>
+    </li>
+
+    <li routerLink="/payments" (click)="close.emit()">
+      <i class="bi bi-cash"></i>
+      <span *ngIf="open">Payments</span>
+    </li>
+    <li routerLink="/stock" (click)="close.emit()">
+      <i class="bi bi-cash"></i>
+      <span *ngIf="open">Stock</span>
+    </li>
+  </ul>
+
+</div>

@@ -1,0 +1,43 @@
+<div class="row g-4">
+
+  <!-- SALES -->
+  <div class="col-lg-3 col-md-6 col-12">
+    <div class="card stat-card bg-primary">
+      <h6>Total Sales</h6>
+      <h3>₹ {{ totalSales }}</h3>
+    </div>
+  </div>
+
+  <!-- PROFIT -->
+  <div class="col-lg-3 col-md-6 col-12">
+    <div class="card stat-card bg-success">
+      <h6>Total Profit</h6>
+      <h3>₹ {{ totalProfit }}</h3>
+    </div>
+  </div>
+
+  <!-- PURCHASED -->
+  <div class="col-lg-3 col-md-6 col-12">
+    <div class="card stat-card bg-warning">
+      <h6>Purchased Today</h6>
+      <h3>{{ purchasedStock }} Trays</h3>
+    </div>
+  </div>
+
+  <!-- SUPPLIED -->
+  <div class="col-lg-3 col-md-6 col-12">
+    <div class="card stat-card bg-danger">
+      <h6>Supplied Today</h6>
+      <h3>{{ suppliedStock }} Trays</h3>
+    </div>
+  </div>
+
+  <!-- REMAINING -->
+  <div class="col-12">
+    <div class="card stat-card bg-dark">
+      <h6>Remaining Stock</h6>
+      <h2>{{ remainingStock }} Trays</h2>
+    </div>
+  </div>
+
+</div>
