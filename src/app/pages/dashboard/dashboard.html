@@ -1,31 +1,42 @@
 <div class="row g-4">
 
-  <!-- SALES -->
-  <div class="col-lg-3 col-md-6 col-12">
+  <!-- TODAY -->
+  <div class="col-lg-4 col-md-6 col-12">
     <div class="card stat-card bg-primary">
-      <h6>Total Sales</h6>
-      <h3>₹ {{ totalSales }}</h3>
+      <h6>Today Sales</h6>
+      <h3>₹ {{ todaySales }}</h3>
+      <p class="text-muted-sm mb-0">Profit: ₹ {{ todayProfit }}</p>
     </div>
   </div>
 
-  <!-- PROFIT -->
-  <div class="col-lg-3 col-md-6 col-12">
+  <!-- MONTH -->
+  <div class="col-lg-4 col-md-6 col-12">
     <div class="card stat-card bg-success">
-      <h6>Total Profit</h6>
-      <h3>₹ {{ totalProfit }}</h3>
+      <h6>This Month</h6>
+      <h3>₹ {{ monthSales }}</h3>
+      <p class="text-muted-sm mb-0">Profit: ₹ {{ monthProfit }}</p>
+    </div>
+  </div>
+
+  <!-- YEAR -->
+  <div class="col-lg-4 col-md-12 col-12">
+    <div class="card stat-card bg-warning">
+      <h6>This Year</h6>
+      <h3>₹ {{ yearSales }}</h3>
+      <p class="text-muted-sm mb-0">Profit: ₹ {{ yearProfit }}</p>
     </div>
   </div>
 
   <!-- PURCHASED -->
-  <div class="col-lg-3 col-md-6 col-12">
-    <div class="card stat-card bg-warning">
+  <div class="col-lg-4 col-md-4 col-12">
+    <div class="card stat-card bg-info">
       <h6>Purchased Today</h6>
       <h3>{{ purchasedStock }} Trays</h3>
     </div>
   </div>
 
   <!-- SUPPLIED -->
-  <div class="col-lg-3 col-md-6 col-12">
+  <div class="col-lg-4 col-md-4 col-12">
     <div class="card stat-card bg-danger">
       <h6>Supplied Today</h6>
       <h3>{{ suppliedStock }} Trays</h3>
@@ -33,11 +44,56 @@
   </div>
 
   <!-- REMAINING -->
-  <div class="col-12">
+  <div class="col-lg-4 col-md-4 col-12">
     <div class="card stat-card bg-dark">
       <h6>Remaining Stock</h6>
       <h2>{{ remainingStock }} Trays</h2>
     </div>
   </div>
 
+</div>
+
+<!-- Simple sales visualization -->
+<div class="card mt-4 p-3 shadow">
+  <h6 class="mb-2">Sales overview</h6>
+  <p class="text-muted-sm mb-3">Relative comparison of today, this month, and this year.</p>
+
+  <div class="sales-bars" *ngIf="yearSales || monthSales || todaySales">
+    <div class="sales-bar-row">
+      <span class="sales-bar-label">Today</span>
+      <div class="sales-bar-track">
+        <div
+          class="sales-bar-fill"
+          [style.width.%]="maxSales ? (todaySales / maxSales) * 100 : 0">
+        </div>
+      </div>
+      <span class="sales-bar-label text-end">₹ {{ todaySales }}</span>
+    </div>
+
+    <div class="sales-bar-row">
+      <span class="sales-bar-label">This month</span>
+      <div class="sales-bar-track">
+        <div
+          class="sales-bar-fill"
+          [style.width.%]="maxSales ? (monthSales / maxSales) * 100 : 0">
+        </div>
+      </div>
+      <span class="sales-bar-label text-end">₹ {{ monthSales }}</span>
+    </div>
+
+    <div class="sales-bar-row">
+      <span class="sales-bar-label">This year</span>
+      <div class="sales-bar-track">
+        <div
+          class="sales-bar-fill"
+          [style.width.%]="maxSales ? (yearSales / maxSales) * 100 : 0">
+        </div>
+      </div>
+      <span class="sales-bar-label text-end">₹ {{ yearSales }}</span>
+    </div>
+  </div>
+
+  <p *ngIf="!yearSales && !monthSales && !todaySales" class="text-muted-sm mb-0">
+    No sales data yet to visualize.
+  </p>
 </div>

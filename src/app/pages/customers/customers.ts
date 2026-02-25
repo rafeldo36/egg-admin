@@ -10,8 +10,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './customers.scss',
 })
 export class Customers {
-customers: any[] = [];
+  customers: any[] = [];
   newCustomer: any = {};
+  searchTerm = '';
+  editingId: string | null = null;
 
   constructor(private api: Api) {}
 
@@ -19,16 +21,63 @@ customers: any[] = [];
     this.loadCustomers();
   }
 
+  get filteredCustomers() {
+    if (!this.searchTerm) {
+      return this.customers;
+    }
+
+    const term = this.searchTerm.toLowerCase();
+    return this.customers.filter((c) =>
+      (c.name || '').toLowerCase().includes(term) ||
+      (c.type || '').toLowerCase().includes(term)
+    );
+  }
+
   loadCustomers() {
-    this.api.getCustomers().subscribe((res: any) => {
+    this.api.getCustomers(true).subscribe((res: any) => {
       this.customers = res;
     });
   }
 
-  addCustomer() {
-    this.api.addCustomer(this.newCustomer).subscribe(() => {
-      this.newCustomer = {};
+  saveCustomer() {
+    if (this.editingId) {
+      this.api.updateCustomer(this.editingId, this.newCustomer).subscribe(() => {
+        this.resetForm();
+        this.loadCustomers();
+      });
+    } else {
+      this.api.addCustomer(this.newCustomer).subscribe(() => {
+        this.resetForm();
+        this.loadCustomers();
+      });
+    }
+  }
+
+  editCustomer(c: any) {
+    this.editingId = c._id;
+    this.newCustomer = {
+      name: c.name,
+      phone: c.phone,
+      type: c.type,
+      creditLimit: c.creditLimit
+    };
+  }
+
+  deleteCustomer(id: string) {
+    if (!confirm('Delete this customer?')) {
+      return;
+    }
+    this.api.deleteCustomer(id).subscribe(() => {
       this.loadCustomers();
     });
+  }
+
+  cancelEdit() {
+    this.resetForm();
+  }
+
+  private resetForm() {
+    this.newCustomer = {};
+    this.editingId = null;
   }
 }

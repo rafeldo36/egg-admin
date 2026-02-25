@@ -1,17 +1,138 @@
-<div class="card p-4 shadow">
-  <h5>Add Supply</h5>
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card p-4 shadow">
+      <h5 class="mb-3">Add Supply</h5>
 
-  <form (ngSubmit)="addSupply()">
-    <select class="form-control mb-2" [(ngModel)]="supply.customerId" name="customerId">
-      <option *ngFor="let c of customers" [value]="c._id">
-        {{c.name}}
-      </option>
-    </select>
+      <form (ngSubmit)="addSupply()">
+        <div class="row g-3">
+          <div class="col-md-12">
+            <label class="form-label small text-muted">Customer</label>
+            <select
+              class="form-control"
+              [(ngModel)]="supply.customerId"
+              name="customerId">
+              <option *ngFor="let c of customers" [value]="c._id">
+                {{c.name}}
+              </option>
+            </select>
+          </div>
 
-    <input type="number" class="form-control mb-2" placeholder="Trays" [(ngModel)]="supply.trays" name="trays">
-    <input type="number" class="form-control mb-2" placeholder="Rate Per Tray" [(ngModel)]="supply.ratePerTray" name="ratePerTray">
-    <input type="number" class="form-control mb-2" placeholder="Purchase Rate" [(ngModel)]="supply.purchaseRatePerTray" name="purchaseRatePerTray">
+          <div class="col-md-4">
+            <label class="form-label small text-muted">Trays</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Trays"
+              [(ngModel)]="supply.trays"
+              name="trays">
+          </div>
 
-    <button class="btn btn-success">Add Supply</button>
-  </form>
+          <div class="col-md-4">
+            <label class="form-label small text-muted">Rate / Tray</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Rate Per Tray"
+              [(ngModel)]="supply.ratePerTray"
+              name="ratePerTray">
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label small text-muted">Purchase Rate / Tray</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Purchase Rate"
+              [(ngModel)]="supply.purchaseRatePerTray"
+              name="purchaseRatePerTray">
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+          <div class="text-muted-sm">
+            Total Amount:
+            <span class="fw-semibold text-light">₹ {{ totalAmount || 0 }}</span>
+            &nbsp;•&nbsp;
+            Estimated Profit:
+            <span class="fw-semibold text-success">₹ {{ estimatedProfit || 0 }}</span>
+          </div>
+
+          <button class="btn btn-success">
+            Add Supply
+          </button>
+        </div>
+
+        <div *ngIf="successMessage" class="alert alert-success mt-3 py-2">
+          {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3 py-2">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card p-3 shadow">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Supplies</h5>
+        <div class="btn-group btn-group-sm">
+          <button
+            class="btn btn-outline-light"
+            [class.active]="filterRange === 'today'"
+            (click)="setRange('today')">
+            Today
+          </button>
+          <button
+            class="btn btn-outline-light"
+            [class.active]="filterRange === 'month'"
+            (click)="setRange('month')">
+            This Month
+          </button>
+          <button
+            class="btn btn-outline-light"
+            [class.active]="filterRange === 'year'"
+            (click)="setRange('year')">
+            This Year
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Customer</th>
+              <th>Trays</th>
+              <th>Rate</th>
+              <th>Total</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of supplies">
+              <td>{{ s.date | date:'shortDate' }}</td>
+              <td>{{ s.customerId }}</td>
+              <td>{{ s.trays }}</td>
+              <td>₹ {{ s.ratePerTray }}</td>
+              <td>₹ {{ s.totalAmount }}</td>
+              <td class="text-end">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteSupply(s._id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="supplies.length === 0">
+              <td colspan="6" class="text-center text-muted">
+                No supplies in this period.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

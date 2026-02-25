@@ -2,32 +2,48 @@
      [class.closed]="!open">
 
   <div class="logo">
-    <span *ngIf="open">🥚 Egg ERP</span>
-    <span *ngIf="!open">🥚</span>
+    <span class="logo-mark">🥚</span>
+    <span *ngIf="open" class="logo-text">Egg ERP</span>
   </div>
 
   <ul>
-    <li routerLink="/dashboard" (click)="close.emit()">
+    <li
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      (click)="close.emit()">
       <i class="bi bi-speedometer2"></i>
       <span *ngIf="open">Dashboard</span>
     </li>
 
-    <li routerLink="/customers" (click)="close.emit()">
+    <li
+      routerLink="/customers"
+      routerLinkActive="active"
+      (click)="close.emit()">
       <i class="bi bi-people"></i>
       <span *ngIf="open">Customers</span>
     </li>
 
-    <li routerLink="/supply" (click)="close.emit()">
-      <i class="bi bi-box"></i>
+    <li
+      routerLink="/supply"
+      routerLinkActive="active"
+      (click)="close.emit()">
+      <i class="bi bi-box-seam"></i>
       <span *ngIf="open">Supply</span>
     </li>
 
-    <li routerLink="/payments" (click)="close.emit()">
-      <i class="bi bi-cash"></i>
+    <li
+      routerLink="/payments"
+      routerLinkActive="active"
+      (click)="close.emit()">
+      <i class="bi bi-cash-coin"></i>
       <span *ngIf="open">Payments</span>
     </li>
-    <li routerLink="/stock" (click)="close.emit()">
-      <i class="bi bi-cash"></i>
+
+    <li
+      routerLink="/stock"
+      routerLinkActive="active"
+      (click)="close.emit()">
+      <i class="bi bi-archive"></i>
       <span *ngIf="open">Stock</span>
     </li>
   </ul>

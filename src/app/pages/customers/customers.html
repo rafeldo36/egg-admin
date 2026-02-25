@@ -1,36 +1,114 @@
-<div class="card p-3 shadow mb-4">
-  <h5>Add Customer</h5>
-  <form (ngSubmit)="addCustomer()">
-    <input class="form-control mb-2" placeholder="Name" [(ngModel)]="newCustomer.name" name="name" required>
-    <input class="form-control mb-2" placeholder="Phone" [(ngModel)]="newCustomer.phone" name="phone">
-    <select class="form-control mb-2" [(ngModel)]="newCustomer.type" name="type">
-      <option value="retailer">Retailer</option>
-      <option value="hotel">Hotel</option>
-    </select>
-    <input type="number" class="form-control mb-2" placeholder="Credit Limit" [(ngModel)]="newCustomer.creditLimit" name="creditLimit">
-    <button class="btn btn-primary">Add</button>
-  </form>
-</div>
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card p-3 shadow-sm h-100">
+      <h5 class="mb-3">
+        {{ editingId ? 'Edit Customer' : 'Add Customer' }}
+      </h5>
+      <form (ngSubmit)="saveCustomer()">
+        <input
+          class="form-control mb-2"
+          placeholder="Name"
+          [(ngModel)]="newCustomer.name"
+          name="name"
+          required>
 
-<div class="card shadow">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Credit Limit</th>
-        <th>Balance</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of customers">
-        <td>{{c.name}}</td>
-        <td>{{c.type}}</td>
-        <td>{{c.creditLimit}}</td>
-        <td [class.text-danger]="c.currentBalance > 0">
-          ₹ {{c.currentBalance}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        <input
+          class="form-control mb-2"
+          placeholder="Phone"
+          [(ngModel)]="newCustomer.phone"
+          name="phone">
+
+        <select
+          class="form-control mb-2"
+          [(ngModel)]="newCustomer.type"
+          name="type">
+          <option value="retailer">Retailer</option>
+          <option value="hotel">Hotel</option>
+        </select>
+
+        <input
+          type="number"
+          class="form-control mb-3"
+          placeholder="Credit Limit"
+          [(ngModel)]="newCustomer.creditLimit"
+          name="creditLimit">
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary flex-fill" type="submit">
+            {{ editingId ? 'Update' : 'Save' }}
+          </button>
+          <button
+            *ngIf="editingId"
+            type="button"
+            class="btn btn-outline-light"
+            (click)="cancelEdit()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card shadow p-3">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+        <h5 class="mb-0">Customers</h5>
+        <input
+          type="text"
+          class="form-control form-control-sm w-auto"
+          placeholder="Search name or type…"
+          [(ngModel)]="searchTerm">
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Credit Limit</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of filteredCustomers">
+              <td>{{ c.name }}</td>
+              <td>
+                <span
+                  class="badge-soft"
+                  [ngClass]="{
+                    'badge-soft-emerald': c.type === 'retailer',
+                    'badge-soft-amber': c.type === 'hotel'
+                  }">
+                  {{ c.type || 'N/A' }}
+                </span>
+              </td>
+              <td>₹ {{ c.creditLimit || 0 }}</td>
+              <td [class.text-danger]="c.currentBalance > 0">
+                ₹ {{ c.currentBalance || 0 }}
+              </td>
+              <td class="text-end">
+                <button
+                  class="btn btn-sm btn-outline-light me-1"
+                  (click)="editCustomer(c)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteCustomer(c._id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="filteredCustomers.length === 0">
+              <td colspan="5" class="text-center text-muted">
+                No customers found.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

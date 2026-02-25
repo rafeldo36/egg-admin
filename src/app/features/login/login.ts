@@ -11,9 +11,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.scss',
 })
 export class Login {
-username = '';
+  username = '';
   password = '';
   error = '';
+  isLoading = false;
 
   constructor(
     private auth: Api,
@@ -21,6 +22,13 @@ username = '';
   ) {}
 
   login() {
+    if (!this.username || !this.password || this.isLoading) {
+      return;
+    }
+
+    this.error = '';
+    this.isLoading = true;
+
     this.auth.login({
       username: this.username,
       password: this.password
@@ -28,9 +36,11 @@ username = '';
       next: (res: any) => {
         this.auth.saveToken(res.token);
         this.router.navigate(['/dashboard']);
+        this.isLoading = false;
       },
       error: (err) => {
-        this.error = err.error.message;
+        this.error = err?.error?.message || 'Unable to sign in. Please try again.';
+        this.isLoading = false;
       }
     });
   }
